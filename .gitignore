@@ -3,7 +3,7 @@
 Thumbs.db
 
 # Node/Web tooling (if any future scale)
-node_modules/
+node_modules/ 
 dist/
 build/
 .env
