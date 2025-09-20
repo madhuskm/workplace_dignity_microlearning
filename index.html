@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Workplace Dignity Microlearning: POSH Awareness</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f7f8fa; padding: 16px; }
+    .container { max-width: 600px; margin: 32px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 12px #d6d7de44; padding: 32px; }
+    h1 { color: #263669; }
+    .section { margin-bottom: 32px; }
+    .quiz { background: #e9f4fc; border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+    button { background: #263669; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+    button:disabled { background: #ddd; color: #aaa; }
+    #result { font-weight: bold; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Workplace Dignity Microlearning</h1>
+  <h2 style="color: #15695c">Safe, Respectful & Inclusive Workplaces</h2>
+  <div class="section">
+    <p>
+      This microlearning module helps Indian employees understand the essentials of <b>Prevention of Sexual Harassment (POSH)</b> as required under Indian law and company policy.<br>
+      <i>Mandatory for all employees. Estimated completion: 5 minutes.</i>
+    </p>
+  </div>
+  <div class="section" id="learning">
+    <h3>Key Concepts</h3>
+    <ul>
+      <li>
+        <b>What is Sexual Harassment?</b> <br>
+        Any unwelcome, sexually determined behaviour (verbal or physical) at the workplace that violates an individual's dignity.
+      </li>
+      <li>
+        <b>Legal Framework</b> <br>
+        The POSH Act, 2013, makes it mandatory for Indian companies to prevent, prohibit, and redress sexual harassment at work.
+      </li>
+      <li>
+        <b>Examples</b> <br>
+        Unwanted touching, inappropriate jokes, explicit messages, comments about appearance, repeated unwelcome advances.
+      </li>
+      <li>
+        <b>Reporting</b> <br>
+        All employees have the right to report an incident safely and confidentially to the Internal Committee (IC) or HR contact.
+      </li>
+      <li>
+        <b>Employer Responsibility</b> <br>
+        Every company must take prompt action, safeguard complainants from retaliation, and provide mandatory training to all employees.
+      </li>
+    </ul>
+  </div>
+  <div class="section">
+    <h3>Quick Quiz</h3>
+    <div id="quiz-section" class="quiz"></div>
+    <button onclick="nextQuestion()" id="next-btn" style="display:none;">Next</button>
+    <div id="result"></div>
+  </div>
+  <div class="section" style="font-size: 0.92em; color: #555;">
+    <b>Learn more</b>: [Company Intranet] | Contact: <u>ic@company.com</u> or HR dept | <b>All responses are confidential.</b>
+  </div>
+</div>
+<script>
+const questions = [
+  {
+    q: "Which of the following is a form of sexual harassment at the workplace?",
+    options: [
+      "A colleague repeatedly makes suggestive jokes despite being asked to stop.",
+      "Team members share professional feedback.",
+      "You are assigned a new project.",
+      "Manager schedules a weekly team meeting."
+    ],
+    answer: 0
+  },
+  {
+    q: "If you see someone being harassed, what should you do?",
+    options: [
+      "Ignore, as it's not your business.",
+      "Inform the Internal Committee or HR as a bystander.",
+      "Publicly confront the accused.",
+      "Share it as office gossip."
+    ],
+    answer: 1
+  },
+  {
+    q: "Is reporting sexual harassment confidential within the company?",
+    options: [
+      "Yes, handled by the Internal Committee/HR as per law.",
+      "No, it will be shared with everyone.",
+      "It depends on your job level.",
+      "Only for certain departments."
+    ],
+    answer: 0
+  }
+];
+let current = 0;
+let score = 0;
+
+function renderQuestion() {
+  const q = questions[current];
+  let html = `<b>${q.q}</b><form id='quiz-form'>`;
+  q.options.forEach((opt, idx) => {
+    html += `<label><input type='radio' name='quiz' value='${idx}'> ${opt}</label><br>`;
+  });
+  html += `<br><button type='submit'>Submit</button></form>`;
+  document.getElementById('quiz-section').innerHTML = html;
+  document.getElementById('next-btn').style.display = "none";
+  document.getElementById('result').innerText = "";
+  document.getElementById('quiz-form').onsubmit = checkAnswer;
+}
+function checkAnswer(e) {
+  e.preventDefault();
+  const opt = document.querySelector("input[name='quiz']:checked");
+  if (!opt) return;
+  const selected = Number(opt.value);
+  const correct = questions[current].answer;
+  if (selected === correct) {
+    document.getElementById('result').innerText = "Correct!";
+    score++;
+  } else {
+    document.getElementById('result').innerText = "Incorrect. Please review learning points above.";
+  }
+  document.getElementById('next-btn').style.display = (current < questions.length-1) ? "" : "none";
+  document.getElementById('quiz-form').onsubmit = () => false;
+}
+function nextQuestion() {
+  current++;
+  if (current < questions.length) {
+    renderQuestion();
+  } else {
+    document.getElementById('quiz-section').innerHTML = "";
+    document.getElementById('next-btn').style.display = "none";
+    document.getElementById('result').innerHTML =
+      `Module completed.<br>Your score: <b>${score}/${questions.length}</b><br>Thank you for upholding a safe, dignified workplace!`;
+  }
+}
+renderQuestion();
+</script>
+</body>
+</html>
